@@ -1,2 +1,2 @@
 # Adcuratio-Task-React
-Created with CodeSandbox
+Live app link deployed in CodeSandBox - https://2jqcxg.csb.app/
