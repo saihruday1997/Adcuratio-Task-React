@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { v4 as uuid } from "uuid";
 
@@ -9,6 +9,19 @@ export default function CommentView() {
   const [editCommentText, setEditCommentText] = useState("");
   const [replyText, setReplyText] = useState("");
   const [commentsData, setCommentsData] = useState([]);
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem("data"));
+    if (!!data) {
+      setCommentsData(data);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (commentsData.length > 0) {
+      localStorage.setItem("data", JSON.stringify(commentsData));
+    }
+  }, [commentsData]);
 
   const onCommentChange = (e) => {
     setCommentText(e.target.value);
@@ -104,7 +117,6 @@ export default function CommentView() {
 
   return (
     <>
-      {console.log(commentsData)}
       <Box display="flex" flexDirection="column" p={2}>
         <Box pt={1}>
           <TextField
@@ -215,7 +227,7 @@ export default function CommentView() {
                             onClick={() => addReply(e.id)}
                             disabled={!replyText}
                           >
-                            Reply
+                            Save
                           </Button>
                         </Box>
                       </Box>
